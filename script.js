@@ -4,10 +4,16 @@ var app = angular.module('app', []);
 app.factory('recognizeService', function($http) {
     return {
         recognize: function(imgLink) {
-            var url = 'https://wt-6ef066b9cf6b1a054894d9e763c64855-0.run.webtask.io/Thinh-Sama-recognize';
+            toastr.info("Đang nhận diện, có thể hơi lâu, vui lòng chờ");
+            const key = 'k7dgy05qyfs8uwjvjrjdobt9x17c3yu0gteqyd0qqkomeu3di60kxsrkutl9yge0s2ixiil766r';
+            const url = 'https://jav-recognize.azurewebsites.net/api/IdolRecognize';
+
             return $http({
                 method: 'POST',
                 url,
+                headers: {
+                    'x-functions-key': key
+                },
                 data: {
                     url: imgLink
                 }
