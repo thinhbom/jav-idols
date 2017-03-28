@@ -4,7 +4,6 @@ var app = angular.module('app', []);
 app.factory('recognizeService', function($http) {
     return {
         recognize: function(imgLink) {
-            toastr.info("Đang nhận diện, có thể hơi lâu, vui lòng chờ");
             const key = 'k7dgy05qyfs8uwjvjrjdobt9x17c3yu0gteqyd0qqkomeu3di60kxsrkutl9yge0s2ixiil766r';
             const url = 'https://jav-recognize.azurewebsites.net/api/IdolRecognize';
 
