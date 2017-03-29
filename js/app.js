@@ -184,7 +184,7 @@ app.factory('recognizeService', [
                     const originalWidth = size.width;
                     const currentWidth = document.querySelector('#source-image').clientWidth;
                     const ratio = currentWidth / originalWidth;
-                    const faces = result.data.data.map(r => {
+                    const faces = result.data.data(r => {
                         const face = r.face.faceRectangle;
                         const faceStyle = {
                             width: `${face.width * ratio}px`,
