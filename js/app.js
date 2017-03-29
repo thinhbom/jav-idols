@@ -184,7 +184,8 @@ app.factory('recognizeService', [
                     const originalWidth = size.width;
                     const currentWidth = document.querySelector('#source-image').clientWidth;
                     const ratio = currentWidth / originalWidth;
-                    const faces = data.result.map(r => {
+                    const faces = result.data.map(r => {
+                        return {
                         const face = r.face.faceRectangle;
                         const faceStyle = {
                             width: `${face.width * ratio}px`,
@@ -192,7 +193,7 @@ app.factory('recognizeService', [
                             left: `${face.left * ratio}px`,
                             top: `${face.top * ratio}px`
                         };
-
+};
                         let fontSize = (face.width * ratio / 6);
                         let minFontSize = 15;
                         fontSize = Math.max(fontSize, minFontSize);
