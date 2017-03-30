@@ -5,9 +5,9 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="chrome=1">
         <title>Nhận diện JAV Idol</title>
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-        <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
-        <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+        <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+        <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32">
+        <link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16">
         <meta name="description" content="Nhận diện JAV Idol">
         <meta name="keywords" content="JAV, Microsoft Cognitive API">
         <meta name="author" content="Hoàng Phạm">
@@ -30,7 +30,7 @@
         <!-- Sidebar Menu -->
         <div class="ui vertical inverted sidebar menu">
             <a href="#top" class="header item">
-                <img class="ui logo" src="/images/logo.png">
+                <img class="ui logo" src="images/logo.png">
                 Nhận diện Idol
             </a>
             <a href="#guide" class="item">Hướng dẫn sử dụng</a>
@@ -47,7 +47,7 @@
                         <i class="sidebar icon"></i>
                     </a>
                     <a href="#top" class="header item">
-                        <img class="ui logo" src="/images/logo.png">
+                        <img class="ui logo" src="images/logo.png">
                         Nhận diện Idol
                     </a>
                     <a href="#guide" class="item">Hướng dẫn sử dụng</a>
@@ -62,13 +62,12 @@
 
             <div class="ui header inverted center aligned segment">
                 <div class="ui text container">
-                    <img width="100" src="/images/header_logo.jpg" alt="" class="ui center">
+                    <img width="100" src="images/header_logo.jpg" alt="" class="ui center">
 
                     <h1 class="ui inverted small-margin">
                         Nhận diện idol
                     </h1>
                     <h4 class="small-margin">Công cụ giúp bạn tìm JAV idol mà không cần hóng link từ các "thánh"</h4>
-                                        <div class="fb-like" data-href="http://jav-idol.toidicodedao.com/" data-layout="button_count" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
                 </div>
             </div>
             <br>
@@ -114,11 +113,6 @@
                             <img src="http://placehold.it/600x300?text=JAV+idol" ng-if="!input.imageLink" class="ui"/>
                             <img ng-if="input.imageLink" ng-src="{{input.imageLink}}" id="source-image" class="ui"/>
                             <div popup data-html="<img class='ui image idol-name-popup' src='{{face.candidate.thumbnail}}' />" data-position="bottom center" class="idol-face" ng-style="face.face" ng-repeat="face in faces">
-                                <!--
-                                <a target="_blank" ng-href="http://www.jjgirls.com{{face.candidate.link}}">
-                                    <span ng-style="face.candidate.nameStyle" class="idol-name">{{face.candidate.name}}</span>
-                                </a>
--->
                                 <a target="_blank">
                                     <span ng-style="face.candidate.nameStyle" class="idol-name">{{face.candidate.name}}</span>
                                 </a>
@@ -161,7 +155,7 @@
                         Paste vào textbox và bấm "Nhận diện idol". Nếu ảnh nằm trong máy, bạn nhấp vào "Upload ảnh", chọn ảnh và bấm "Nhận diện Idol"</p>
                     <p>
 
-                        <img src="/images/guide.jpg" class="ui image">
+                        <img src="images/guide.jpg" class="ui image">
                         <h3 class="section ui horizontal header divider">
                             Về ứng dụng
                         </h3>
@@ -212,7 +206,6 @@
                                 <img ng-src="{{idol.thumbnail}}">
                             </a>
                             <div class="content">
-                                <!--<a target="blank" ng-href="{{idol.link}}" class="header">{{idol.name}}</a>-->
                                 <a target="blank" class="header">{{idol.name}}</a>
                                 <div class="meta">
                                     <span ng-if="idol.id <= 500 || idol.id > 10000">
@@ -268,14 +261,14 @@
                     <div class="center aligned row">
                         <div class="column">
                             <h3>"Thật không thể tin nổi! Ứng dụng nhỏ, nhưng là một bước tiến lớn về công nghệ."</h3>
-                            <p><img src="/images/quang.jpg" class="ui avatar image">
+                            <p><img src="images/quang.jpg" class="ui avatar image">
                                 <b>Nổ Văn Quảng</b>
                                 Giám đốc VAV, JAV và BKAV
                             </p>
                         </div>
                         <div class="column">
                             <h3>"Có nằm mơ tôi cũng không ngờ công nghệ của Microsoft lại được áp dụng một cách sáng tạo như thế"</h3>
-                            <p><img src="/images/bill.jpg" class="ui avatar image">
+                            <p><img src="images/bill.jpg" class="ui avatar image">
                                 <b>Biu Gết</b>
                                 Sáng lập Microsoft
                             </p>
@@ -283,7 +276,7 @@
                         <div class="column">
                             <h3>"Một cái tát thẳng vào mặt những thằng post ảnh không đưa link"</h3>
                             <p>
-                                <img src="/images/huy.jpg" class="ui avatar image">
+                                <img src="images/huy.jpg" class="ui avatar image">
                                 <b>Anh Huy Phạm</b>
                                 Admin Page 18+
                             </p>
@@ -291,7 +284,7 @@
                         <div class="column">
                             <h3>"Ứng dụng rất hữu ích, giúp ông nhìn mặt nhớ tên mấy đứa cháu gái thân thương"</h3>
                             <p>
-                                <img src="/images/shigeo.jpg" class="ui avatar image">
+                                <img src="images/shigeo.jpg" class="ui avatar image">
                                 <b>Shigeo Tokuda</b>
                                 Cụ già thần thánh
                             </p>
