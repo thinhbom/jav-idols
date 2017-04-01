@@ -75,14 +75,14 @@ app.config([
 
 app.config(function($sceDelegateProvider) {
  $sceDelegateProvider.resourceUrlWhitelist([
-   'https://thinhbom.github.io/test-vav-idol/js/templates/dirPagination.tpl.html',
-   'https://thinhbom.github.io/test-vav-idol/data/idols-filtered.json']);
+   'https://thinhbom.github.io/jav-idols/js/templates/dirPagination.tpl.html',
+   'https://thinhbom.github.io/jav-idols/data/idols-filtered.json']);
  });
  
 app.config([
     'paginationTemplateProvider',
     function(paginationTemplateProvider) {
-        paginationTemplateProvider.setPath('https://thinhbom.github.io/test-vav-idol/js/templates/dirPagination.tpl.html');
+        paginationTemplateProvider.setPath('https://thinhbom.github.io/jav-idols/js/templates/dirPagination.tpl.html');
     }
 ]);
 
@@ -92,7 +92,7 @@ app.factory('idolService', [
 
         return {
             loadIdols() {
-                let link = "https://thinhbom.github.io/test-vav-idol/data/idols-filtered.json";
+                let link = "https://thinhbom.github.io/jav-idols/data/idols-filtered.json";
                 return $http({method: 'GET', url: link}).then(result => result.data.map(idol => {
                     return {
                         id: idol.ID,
