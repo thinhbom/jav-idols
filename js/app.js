@@ -2,7 +2,6 @@ const app = angular.module('jav-idol-face', ['angular-loading-bar', 'angularUtil
 app.filter('dateFromNow', function() {
     return function(date) {
         if (!moment) {
-            console.log('Error: momentJS is not loaded as a global');
             return '!momentJS';
         }
         return moment(date).fromNow();
@@ -74,10 +73,16 @@ app.config([
     }
 ]);
 
+app.config(function($sceDelegateProvider) {
+ $sceDelegateProvider.resourceUrlWhitelist([
+   'https://thinhbom.github.io/test-vav-idol/js/templates/dirPagination.tpl.html',
+   'https://thinhbom.github.io/test-vav-idol/data/idols-filtered.json']);
+ });
+ 
 app.config([
     'paginationTemplateProvider',
     function(paginationTemplateProvider) {
-        paginationTemplateProvider.setPath('/test-vav-idol/js/templates/dirPagination.tpl.html');
+        paginationTemplateProvider.setPath('https://thinhbom.github.io/test-vav-idol/js/templates/dirPagination.tpl.html');
     }
 ]);
 
@@ -87,8 +92,7 @@ app.factory('idolService', [
 
         return {
             loadIdols() {
-                //let link = 'https://s3-ap-southeast-1.amazonaws.com/linhtinh-hoangph/idols-filtered.json';
-                let link = "/test-vav-idol/data/idols-filtered.json";
+                let link = "https://thinhbom.github.io/test-vav-idol/data/idols-filtered.json";
                 return $http({method: 'GET', url: link}).then(result => result.data.map(idol => {
                     return {
                         id: idol.ID,
@@ -148,52 +152,31 @@ app.factory('recognizeService', [
             });
         },
 
-        checkAdultContent(imgLink) {
-            const key = 'k7dgy05qyfs8uwjvjrjdobt9x17c3yu0gteqyd0qqkomeu3di60kxsrkutl9yge0s2ixiil766r';
-            const url = 'https://jav-recognize.azurewebsites.net/api/CheckAdult';
-
-            return $http({
-                method: 'POST',
-                url,
-                headers: {
-                    'x-functions-key': key
-                },
-                data: {
-                    url: imgLink
-                }
-            });
-        },
-
         recognizeImage(imgLink) {
             toastr.info("Đang nhận diện, có thể hơi lâu, vui lòng chờ");
-            const key = 'k7dgy05qyfs8uwjvjrjdobt9x17c3yu0gteqyd0qqkomeu3di60kxsrkutl9yge0s2ixiil766r';
-            const url = 'https://jav-recognize.azurewebsites.net/api/IdolRecognize';
+            const url = 'https://wt-6ef066b9cf6b1a054894d9e763c64855-0.run.webtask.io/Thinh-Sama-recognize';
 
             return $http({
                 method: 'POST',
                 url,
-                headers: {
-                    'x-functions-key': key
-                },
                 data: {
                     url: imgLink
                 }
             }).then((result) => {
-                console.log(result);
                 return this.getImageSize(imgLink).then(size => {
                     toastr.success('Xong rồi ahihi :">"');
                     const originalWidth = size.width;
                     const currentWidth = document.querySelector('#source-image').clientWidth;
                     const ratio = currentWidth / originalWidth;
                     const faces = result.data.map(r => {
-                        const face = r.face.faceRectangle;
+                const face = r.face;
                         const faceStyle = {
                             width: `${face.width * ratio}px`,
                             height: `${face.height * ratio}px`,
                             left: `${face.left * ratio}px`,
                             top: `${face.top * ratio}px`
                         };
-                        let fontSize = (face.width * ratio / 6);
+                    let fontSize = (face.width * ratio / 6);
                         let minFontSize = 15;
                         fontSize = Math.max(fontSize, minFontSize);
 
@@ -206,15 +189,9 @@ app.factory('recognizeService', [
                                 bottom: `-${fontSize}px`
                             }
                         };
-                        if (r.candidates.length > 0) {
-                            const firstCandidate = r.candidates[0].idol;
-                            candidate.name = firstCandidate.name;
-                            candidate.link = firstCandidate.link;
-                            candidate.thumbnail = firstCandidate.thumbnail;
-                        };
+                            candidate.name = r.idol.name;
                         return {face: faceStyle, candidate};
                     });
-
                     return faces;
                 });
             }, (error) => {
@@ -298,7 +275,6 @@ app.controller('mainCtrl', [
                 recognizeService.recognizeImage($scope.input.imageLink).then(displayResult).catch(displayError);
             } else {
                 recognizeService.uploadImageImgur($scope.input.imageLink).then(result => {
-                    //let url = result.data.url;
                     let url = result.data.data.link;
                     $scope.input.imageLink = url;
                     return url;
@@ -308,24 +284,17 @@ app.controller('mainCtrl', [
 
         function displayResult(result) {
             $scope.isLoading = false;
-            $scope.oldImgLink = $scope.input.imageLink; // Prevent spam
+            $scope.oldImgLink = $scope.input.imageLink;
             $scope.faces = result;
             if ($scope.faces.length == 0) {
                 toastr.warning('Không nhận diện được uhuhu T.T');
             } else {
-                if ($scope.faces[0].candidate.name !== 'Unknown') {
+                if ($scope.faces[0].name !== 'Unknown') {
                     // Check latest entries
-                    recognizeService.checkAdultContent($scope.input.imageLink).then(checkResult => {
-                        var isAdultContent = checkResult.data.adult.isAdultContent;
-                        if (!isAdultContent) {
-                            $scope.latestEntries.$add({
-                                image: $scope.input.imageLink,
-                                time: moment().format(),
-                                idols: result.map(face => face.candidate.name).join(', ')
-                            });
-                        } else {
-                            toastr.warning('Ảnh có nội dung nhạy cảm, không hiện trên real-time nhé!');
-                        }
+                        $scope.latestEntries.$add({
+                            image: $scope.input.imageLink,
+                            time: moment().format(),
+                            idols: result.map(face => face.candidate.name).join(', ')
                     });
 
                 }
@@ -333,7 +302,6 @@ app.controller('mainCtrl', [
         }
 
         function displayError(error) {
-            console.log(error);
             toastr.warning('Có lỗi xảy ra, bạn quay lại sau nhé.');
             $scope.isLoading = false;
         }
